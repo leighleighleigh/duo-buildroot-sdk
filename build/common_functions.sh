@@ -126,6 +126,26 @@ function pack_rootfs
   make rootfs
 )}
 
+function menuconfig_rootfs
+{(
+   echo "menuconfig_rootfs"
+  CHIP_ARCH_LOWER=$(echo "${CHIP_ARCH}" | tr A-Z a-z)
+  CUST_FOLDER_NAME="$PROJECT_FULLNAME"
+  CHIP_FOLDER_PATH="$RAMDISK_PATH"/rootfs/overlay/"$CHIP"
+  SDK_VER_FOLDER_PATH="$RAMDISK_PATH"/rootfs/overlay/"${CHIP_ARCH_LOWER}_${SDK_VER}"
+  CUST_FOLDER_PATH="$RAMDISK_PATH"/rootfs/overlay/"$CUST_FOLDER_NAME"
+  echo "CUST_FOLDER_NAME = ${CUST_FOLDER_NAME}"
+  echo "CHIP_FOLDER_PATH = ${CHIP_FOLDER_PATH}"
+  echo "SDK_VER_FOLDER_PATH = ${SDK_VER_FOLDER_PATH}"
+  echo "CUST_FOLDER_PATH = ${CUST_FOLDER_PATH}"
+
+  export ROOTFS_DIR COMMON_TOOLS_PATH FLASH_PARTITION_XML STORAGE_TYPE
+  export CHIP_FOLDER_PATH SDK_VER_FOLDER_PATH CUST_FOLDER_PATH
+
+  cd "$BUILD_PATH" || return
+  make br-rootfs-menuconfig
+)}
+
 function pack_data
 {(
   print_notice "Run ${FUNCNAME[0]}_${STORAGE_TYPE}() function"
