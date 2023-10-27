@@ -18,3 +18,6 @@ cscope.*
 ncscope.*
 .svim
 
+buildroot*/
+u-boot*/
+ramdisk
